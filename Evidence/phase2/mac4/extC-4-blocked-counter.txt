@@ -1,0 +1,7 @@
+# Blocked attempts from non-edge hosts (block rule counter)
+# Machine: Mac 4 (Backend B + backup DNS + client) (MacBook-Pro-M3), en0 = 10.7.2.47
+# Time:    2026-11-23 19:11:25 IST
+
+$ sudo pfctl -vsr 2>/dev/null | grep -A2 -E 'block return.*port = 3002' | grep -E 'block|Packets'
+block return in quick proto tcp from any to any port = 3002
+  [ Evaluations: 47271     Packets: 2         Bytes: 128         States: 0     ]

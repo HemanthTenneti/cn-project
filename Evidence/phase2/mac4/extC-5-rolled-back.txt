@@ -1,0 +1,7 @@
+# Rollback: macOS default rules restored, no project rules left
+# Machine: Mac 4 (Backend B + backup DNS + client) (MacBook-Pro-M3), en0 = 10.7.2.47
+# Time:    2026-11-23 19:11:28 IST
+
+$ sudo pfctl -s info 2>/dev/null | head -1; echo -n 'project rules left: '; sudo pfctl -sr 2>/dev/null | grep -c 'port = 3002'
+Status: Disabled for 0 days 00:00:00          Debug: Urgent
+project rules left: 0

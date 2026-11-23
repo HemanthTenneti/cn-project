@@ -24,6 +24,8 @@ The `.txt` files are written by `scripts/mac4-solo.sh` / `scripts/mac4-extC-solo
 | extC-1-before | Ext C | pf status before (Disabled) |
 | extC-2-rules-on | Ext C | rules loaded: `pass in` only from edge 10.7.22.206 to :3002, `block return` for everyone else |
 | extC-3-edge-allowed | Ext C | with rules ON the edge still reaches Backend B: pass-rule counters and live pf states from 10.7.22.206 |
+| extC-4-blocked-counter | Ext C | block rule counted 2 packets: a direct client attempt on :3002 was refused (TCP reset) |
+| extC-5-rolled-back | Ext C | rollback: macOS default pf rules restored, pf Disabled, 0 project rules left |
 
 Team IPs: Mac 1 DNS 10.7.5.108 · Mac 2 edge 10.7.22.206 · Mac 3 Backend A 10.7.17.193 · **Mac 4 Backend B + backup DNS 10.7.2.47**.
 
@@ -36,6 +38,6 @@ Team IPs: Mac 1 DNS 10.7.5.108 · Mac 2 edge 10.7.22.206 · Mac 3 Backend A 10.7
 ## Still pending (needs the other Macs at the same time)
 - Ext A failover: Mac 1 stops dnsmasq, clients keep resolving through 10.7.2.47. Mac 1's evidence `07-resolvers` lists the backup as 10.7.17.193 — that is Backend A; the backup DNS is **10.7.2.47**.
 - Ext B: `./scripts/mac4.sh dns-point <ip>` when Mac 1 changes the record, so both DNS servers agree.
-- Ext C: Mac 1 / Mac 3 show `curl -m 3 http://10.7.2.47:3002/api/status` is refused while the rules are on.
+- Ext C (client side): Mac 1's screenshot of the refused `curl -m 3 http://10.7.2.47:3002/api/status` (Mac 4 side is complete).
 - Ext D: Mac 3 stops Backend A → every request through the edge shows `X-Backend: B`.
 - Ext E: `./scripts/mac4.sh extE` when Mac 1 cuts DNS over to the standby edge (Mac 3), then `dns-point 10.7.22.206`.
